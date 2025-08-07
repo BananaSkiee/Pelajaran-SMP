@@ -24,11 +24,13 @@ h1 {
 }
 
 .selectors {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
     margin-bottom: 25px;
 }
 
-#day-selector {
+#class-selector, #day-selector {
     padding: 10px 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
