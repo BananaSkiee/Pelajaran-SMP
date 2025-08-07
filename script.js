@@ -47,6 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     classSelector.addEventListener('change', renderSchedule);
     daySelector.addEventListener('change', renderSchedule);
 
-    // Render jadwal hari pertama dan kelas pertama saat halaman dimuat
+    // Render jadwal default untuk kelas 7.1 pada hari Senin saat halaman dimuat
     renderSchedule();
 });
