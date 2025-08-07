@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const classSelector = document.getElementById('class-selector');
     const daySelector = document.getElementById('day-selector');
     const scheduleContainer = document.getElementById('schedule-container');
 
-    const renderSchedule = (day) => {
-        const classSchedule = scheduleData['9.2'][day];
-        if (!classSchedule) {
+    const renderSchedule = () => {
+        const selectedClass = classSelector.value;
+        const selectedDay = daySelector.value;
+        const classSchedule = scheduleData[selectedClass] ? scheduleData[selectedClass][selectedDay] : null;
+
+        if (!classSchedule || classSchedule.length === 0) {
             scheduleContainer.innerHTML = '<p>Tidak ada jadwal untuk hari ini.</p>';
             return;
         }
@@ -14,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <thead>
                     <tr>
                         <th>Waktu</th>
+                        <th>Kode</th>
                         <th>Mata Pelajaran</th>
                         <th>Guru</th>
                     </tr>
@@ -25,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             htmlContent += `
                 <tr>
                     <td>${item.time}</td>
+                    <td>${item.code || '-'}</td>
                     <td class="subject-cell">${item.subject}</td>
                     <td class="teacher-cell">${item.teacher || '-'}</td>
                 </tr>
@@ -38,10 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         scheduleContainer.innerHTML = htmlContent;
     };
 
-    daySelector.addEventListener('change', (event) => {
-        renderSchedule(event.target.value);
-    });
+    classSelector.addEventListener('change', renderSchedule);
+    daySelector.addEventListener('change', renderSchedule);
 
-    // Render jadwal hari pertama saat halaman dimuat
-    renderSchedule(daySelector.value);
+    // Render jadwal hari pertama dan kelas pertama saat halaman dimuat
+    renderSchedule();
 });
