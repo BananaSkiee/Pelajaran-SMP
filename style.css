@@ -5,7 +5,7 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f0f2f5; /* Warna latar belakang abu-abu muda */
+    background-color: #f0f2f5; /* Warna latar belakang abu-abu muda yang elegan */
     color: #333;
     line-height: 1.6;
 }
@@ -22,19 +22,19 @@ body {
 h1, h2 {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    color: #0d47a1; /* Biru gelap */
+    color: #0d47a1; /* Biru gelap untuk judul */
     margin-bottom: 20px;
 }
 
 h1 {
     font-size: 2.5em;
     padding-bottom: 15px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #e0e0e0; /* Garis bawah yang lebih tipis */
 }
 
 h2 {
     font-size: 1.5em;
-    color: #546e7a; /* Abu-abu kebiruan */
+    color: #546e7a; /* Warna abu-abu kebiruan untuk subjudul */
 }
 
 table {
@@ -42,7 +42,7 @@ table {
     border-collapse: collapse;
     margin-top: 30px;
     font-size: 14px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Bayangan tabel */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Bayangan tabel yang minimalis */
 }
 
 th, td {
@@ -53,7 +53,7 @@ th, td {
 }
 
 th {
-    background-color: #263238; /* Warna header yang lebih gelap */
+    background-color: #263238; /* Warna header yang lebih gelap dan solid */
     color: white;
     font-weight: 600;
 }
@@ -99,6 +99,6 @@ tr:hover {
         -webkit-overflow-scrolling: touch;
     }
     th, td {
-        min-width: 70px; /* Lebar minimum sel yang lebih baik */
+        min-width: 70px;
     }
 }
