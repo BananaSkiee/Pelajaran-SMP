@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #e9f7ef; /* Latar belakang hijau muda */
+    background-color: #e9f7ef;
     color: #333;
     line-height: 1.6;
 }
@@ -18,42 +18,39 @@ body {
 
 h1 {
     text-align: center;
-    color: #00796b; /* Warna hijau tua */
+    color: #00796b;
     margin-bottom: 30px;
     border-bottom: 2px solid #b2dfdb;
     padding-bottom: 10px;
 }
 
-/* Style untuk legenda */
-.legend {
-    margin: 20px auto;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+/* Style untuk tombol filter */
+.filter-buttons {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.legend h3 {
-    margin-top: 0;
-    color: #00796b;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-}
-
-.legend ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 10px 0 0 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.legend li {
-    background-color: #e0f7fa;
-    padding: 8px 12px;
+.filter-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #00796b;
     border-radius: 5px;
-    border: 1px solid #b2dfdb;
+    background-color: #f0fdfc;
+    color: #00796b;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.filter-btn:hover {
+    background-color: #00796b;
+    color: white;
+}
+
+.filter-btn.active {
+    background-color: #00796b;
+    color: white;
+    font-weight: bold;
 }
 
 table {
@@ -64,7 +61,7 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #b2dfdb; /* Garis tabel hijau muda */
+    border: 1px solid #b2dfdb;
 }
 
 th, td {
@@ -73,34 +70,32 @@ th, td {
 }
 
 th {
-    background-color: #009688; /* Warna hijau teal */
+    background-color: #009688;
     color: white;
     font-weight: bold;
 }
 
 tr:nth-child(even) {
-    background-color: #f0fdfc; /* Warna baris genap */
+    background-color: #f0fdfc;
 }
 
 tr:hover {
-    background-color: #e0f2f1; /* Warna saat baris di-hover */
+    background-color: #e0f2f1;
 }
 
-/* Style untuk baris-baris khusus */
 .kegiatan-bersama {
-    background-color: #ffeb3b; /* Kuning */
+    background-color: #ffeb3b;
     font-weight: bold;
     font-style: italic;
     color: #333;
 }
 
 .istirahat {
-    background-color: #ffcdd2; /* Merah muda */
+    background-color: #ffcdd2;
     font-weight: bold;
     font-style: italic;
 }
 
-/* Responsif untuk layar kecil */
 @media screen and (max-width: 768px) {
     .container {
         padding: 10px;
@@ -112,5 +107,10 @@ tr:hover {
     }
     th, td {
         min-width: 50px;
+    }
+    .filter-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin: 2px;
     }
 }
