@@ -11,8 +11,9 @@
     <div class="container">
         <h1>Jadwal Pelajaran 2025-2026</h1>
 
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Semua Kelas</button>
+        <h2>Pilih Kelas</h2>
+        <div class="filter-buttons class-filter-group">
+            <button class="filter-btn active" data-filter="all-classes">Semua Kelas</button>
             <button class="filter-btn" data-filter="kelas-7-1">Kelas 7.1</button>
             <button class="filter-btn" data-filter="kelas-7-2">Kelas 7.2</button>
             <button class="filter-btn" data-filter="kelas-8-1">Kelas 8.1</button>
@@ -21,15 +22,25 @@
             <button class="filter-btn" data-filter="kelas-9-2">Kelas 9.2</button>
         </div>
 
+        <h2>Pilih Hari</h2>
+        <div class="filter-buttons day-filter-group">
+            <button class="filter-btn active" data-filter="all-days">Semua Hari</button>
+            <button class="filter-btn" data-filter="senin">Senin</button>
+            <button class="filter-btn" data-filter="selasa">Selasa</button>
+            <button class="filter-btn" data-filter="rabu">Rabu</button>
+            <button class="filter-btn" data-filter="kamis">Kamis</button>
+            <button class="filter-btn" data-filter="jumat">Jumat</button>
+        </div>
+
         <table>
             <thead>
                 <tr>
                     <th rowspan="2">Hari</th>
                     <th rowspan="2">No.</th>
                     <th rowspan="2">Waktu</th>
-                    <th colspan="2">Kelas 7</th>
-                    <th colspan="2">Kelas 8</th>
-                    <th colspan="2">Kelas 9</th>
+                    <th colspan="2" class="kelas-7">Kelas 7</th>
+                    <th colspan="2" class="kelas-8">Kelas 8</th>
+                    <th colspan="2" class="kelas-9">Kelas 9</th>
                 </tr>
                 <tr>
                     <th class="kelas-7-1">1</th>
@@ -41,13 +52,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="senin">
                     <td rowspan="7">SENIN</td>
                     <td></td>
                     <td>07.00 - 07.35</td>
                     <td colspan="6" class="kegiatan-bersama">Upacara Bendera</td>
                 </tr>
-                <tr>
+                <tr class="senin">
                     <td>1</td>
                     <td>07.35 - 08.10</td>
                     <td class="kelas-7-1">PPSC</td>
@@ -57,7 +68,7 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="senin">
                     <td>2</td>
                     <td>08.10 - 08.45</td>
                     <td class="kelas-7-1">PPSC</td>
@@ -67,7 +78,7 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="senin">
                     <td>3</td>
                     <td>08.45 - 09.20</td>
                     <td class="kelas-7-1">PPSC</td>
@@ -77,12 +88,12 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="senin">
                     <td></td>
                     <td>09.20 - 09.35</td>
                     <td colspan="6" class="istirahat">Istirahat</td>
                 </tr>
-                <tr>
+                <tr class="senin">
                     <td>4</td>
                     <td>09.35 - 10.10</td>
                     <td class="kelas-7-1">B. Indonesia</td>
@@ -92,7 +103,7 @@
                     <td class="kelas-9-1">IPA</td>
                     <td class="kelas-9-2">BK</td>
                 </tr>
-                <tr>
+                <tr class="senin">
                     <td>5</td>
                     <td>10.10 - 10.45</td>
                     <td class="kelas-7-1">B. Indonesia</td>
@@ -103,7 +114,7 @@
                     <td class="kelas-9-2">BK</td>
                 </tr>
 
-                <tr>
+                <tr class="selasa">
                     <td rowspan="7">SELASA</td>
                     <td>1</td>
                     <td>07.00 - 07.35</td>
@@ -114,7 +125,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="selasa">
                     <td>2</td>
                     <td>07.35 - 08.10</td>
                     <td class="kelas-7-1">IPS</td>
@@ -124,7 +135,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="selasa">
                     <td>3</td>
                     <td>08.10 - 08.45</td>
                     <td class="kelas-7-1">IPS</td>
@@ -134,7 +145,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="selasa">
                     <td>4</td>
                     <td>08.45 - 09.20</td>
                     <td class="kelas-7-1">PJOK</td>
@@ -144,12 +155,12 @@
                     <td class="kelas-9-1">IPS</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="selasa">
                     <td></td>
                     <td>09.20 - 09.35</td>
                     <td colspan="6" class="istirahat">Istirahat</td>
                 </tr>
-                <tr>
+                <tr class="selasa">
                     <td>5</td>
                     <td>09.35 - 10.10</td>
                     <td class="kelas-7-1">BK</td>
@@ -159,7 +170,7 @@
                     <td class="kelas-9-1">IPS</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="selasa">
                     <td>6</td>
                     <td>10.10 - 10.45</td>
                     <td class="kelas-7-1">BK</td>
@@ -170,7 +181,7 @@
                     <td class="kelas-9-2">IPA</td>
                 </tr>
 
-                <tr>
+                <tr class="rabu">
                     <td rowspan="6">RABU</td>
                     <td>1</td>
                     <td>07.00 - 07.35</td>
@@ -181,7 +192,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="rabu">
                     <td>2</td>
                     <td>07.35 - 08.10</td>
                     <td class="kelas-7-1">B. Indonesia</td>
@@ -191,7 +202,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="rabu">
                     <td>3</td>
                     <td>08.10 - 08.45</td>
                     <td class="kelas-7-1">B. Indonesia</td>
@@ -201,7 +212,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">PJOK</td>
                 </tr>
-                <tr>
+                <tr class="rabu">
                     <td>4</td>
                     <td>08.45 - 09.20</td>
                     <td class="kelas-7-1">PPSC</td>
@@ -211,12 +222,12 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="rabu">
                     <td></td>
                     <td>09.20 - 09.35</td>
                     <td colspan="6" class="istirahat">Istirahat</td>
                 </tr>
-                <tr>
+                <tr class="rabu">
                     <td>5</td>
                     <td>09.35 - 10.10</td>
                     <td class="kelas-7-1">MTK</td>
@@ -227,7 +238,7 @@
                     <td class="kelas-9-2">IPS</td>
                 </tr>
 
-                <tr>
+                <tr class="kamis">
                     <td rowspan="8">KAMIS</td>
                     <td>1</td>
                     <td>07.00 - 07.35</td>
@@ -238,7 +249,7 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">B. Indonesia</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td>2</td>
                     <td>07.35 - 08.10</td>
                     <td class="kelas-7-1">PJOK</td>
@@ -248,7 +259,7 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">B. Indonesia</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td>3</td>
                     <td>08.10 - 08.45</td>
                     <td class="kelas-7-1">PJOK</td>
@@ -258,7 +269,7 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">B. Indonesia</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td>4</td>
                     <td>08.45 - 09.20</td>
                     <td class="kelas-7-1">IPA</td>
@@ -268,12 +279,12 @@
                     <td class="kelas-9-1">PJOK</td>
                     <td class="kelas-9-2">B. Indonesia</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td></td>
                     <td>09.20 - 09.35</td>
                     <td colspan="6" class="istirahat">Istirahat</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td>5</td>
                     <td>09.35 - 10.10</td>
                     <td class="kelas-7-1">PJOK</td>
@@ -283,7 +294,7 @@
                     <td class="kelas-9-1">BK</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td>6</td>
                     <td>10.10 - 10.45</td>
                     <td class="kelas-7-1">PJOK</td>
@@ -293,13 +304,13 @@
                     <td class="kelas-9-1">BK</td>
                     <td class="kelas-9-2">IPA</td>
                 </tr>
-                <tr>
+                <tr class="kamis">
                     <td></td>
                     <td>10.45 - 11.20</td>
                     <td colspan="6" class="kegiatan-bersama">Kegiatan Belajar</td>
                 </tr>
 
-                <tr>
+                <tr class="jumat">
                     <td rowspan="5">JUMAT</td>
                     <td>1</td>
                     <td>07.00 - 07.35</td>
@@ -310,7 +321,7 @@
                     <td class="kelas-9-1">PPSC</td>
                     <td class="kelas-9-2">PPSC</td>
                 </tr>
-                <tr>
+                <tr class="jumat">
                     <td>2</td>
                     <td>07.35 - 08.10</td>
                     <td class="kelas-7-1">TIK</td>
@@ -320,7 +331,7 @@
                     <td class="kelas-9-1">PPSC</td>
                     <td class="kelas-9-2">PPSC</td>
                 </tr>
-                <tr>
+                <tr class="jumat">
                     <td>3</td>
                     <td>08.10 - 08.45</td>
                     <td class="kelas-7-1">TIK</td>
@@ -330,7 +341,7 @@
                     <td class="kelas-9-1">PPSC</td>
                     <td class="kelas-9-2">PPSC</td>
                 </tr>
-                <tr>
+                <tr class="jumat">
                     <td>4</td>
                     <td>08.45 - 09.20</td>
                     <td class="kelas-7-1">B. Indonesia</td>
@@ -340,7 +351,7 @@
                     <td class="kelas-9-1">B. Indonesia</td>
                     <td class="kelas-9-2">IPS</td>
                 </tr>
-                <tr>
+                <tr class="jumat">
                     <td></td>
                     <td>09.20 - 09.55</td>
                     <td colspan="6" class="kegiatan-bersama">Sholat Dzuhur/Kegiatan Keagamaan</td>
@@ -351,44 +362,76 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const tableHeaders = document.querySelectorAll('th.kelas-7-1, th.kelas-7-2, th.kelas-8-1, th.kelas-8-2, th.kelas-9-1, th.kelas-9-2');
-            const tableCells = document.querySelectorAll('td.kelas-7-1, td.kelas-7-2, td.kelas-8-1, td.kelas-8-2, td.kelas-9-1, td.kelas-9-2');
-            const headerColspan = document.querySelectorAll('th[colspan="2"]');
+            const classFilterBtns = document.querySelectorAll('.class-filter-group .filter-btn');
+            const dayFilterBtns = document.querySelectorAll('.day-filter-group .filter-btn');
+            
+            const tableRows = document.querySelectorAll('tbody tr');
+            const tableHeaders = document.querySelectorAll('thead th');
+            const mainClassHeaders = document.querySelectorAll('thead th[colspan="2"]');
 
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterClass = this.dataset.filter;
+            function updateDisplay() {
+                const activeClassFilter = document.querySelector('.class-filter-group .filter-btn.active').dataset.filter;
+                const activeDayFilter = document.querySelector('.day-filter-group .filter-btn.active').dataset.filter;
 
-                    // Hapus kelas 'active' dari semua tombol
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
+                // Tampilkan semua header dulu
+                tableHeaders.forEach(th => th.style.display = 'table-cell');
+                mainClassHeaders.forEach(th => th.style.display = 'table-cell');
 
-                    if (filterClass === 'all') {
-                        // Tampilkan semua kolom
-                        tableHeaders.forEach(th => th.style.display = 'table-cell');
-                        tableCells.forEach(td => td.style.display = 'table-cell');
-                        headerColspan.forEach(th => th.style.display = 'table-cell');
-                    } else {
-                        // Sembunyikan semua kolom
-                        tableHeaders.forEach(th => th.style.display = 'none');
-                        tableCells.forEach(td => td.style.display = 'none');
-                        headerColspan.forEach(th => th.style.display = 'none');
-                        
-                        // Tampilkan hanya kolom yang dipilih
-                        document.querySelectorAll(`th.${filterClass}`).forEach(th => th.style.display = 'table-cell');
-                        document.querySelectorAll(`td.${filterClass}`).forEach(td => td.style.display = 'table-cell');
-                        
-                        // Tampilkan header colspan yang relevan
-                        const mainClass = filterClass.split('-')[1]; // kelas-7-1 -> 7
-                        document.querySelectorAll(`th[colspan="2"]`).forEach(th => {
-                            if (th.textContent.includes(mainClass)) {
-                                th.style.display = 'table-cell';
+                // Sembunyikan header yang tidak relevan (jika filter kelas aktif)
+                if (activeClassFilter !== 'all-classes') {
+                    mainClassHeaders.forEach(th => th.style.display = 'none');
+                    tableHeaders.forEach(th => {
+                        if (th.classList.contains('kelas-7-1') || th.classList.contains('kelas-7-2') || th.classList.contains('kelas-8-1') || th.classList.contains('kelas-8-2') || th.classList.contains('kelas-9-1') || th.classList.contains('kelas-9-2')) {
+                            if (!th.classList.contains(activeClassFilter)) {
+                                th.style.display = 'none';
                             }
+                        }
+                    });
+                }
+                
+                // Tampilkan atau sembunyikan baris dan sel berdasarkan filter
+                tableRows.forEach(row => {
+                    const isRowMatch = (activeDayFilter === 'all-days' || row.classList.contains(activeDayFilter));
+                    row.style.display = isRowMatch ? 'table-row' : 'none';
+
+                    if (isRowMatch) {
+                        row.querySelectorAll('td').forEach(td => {
+                            const isCellMatch = (activeClassFilter === 'all-classes' || td.classList.contains(activeClassFilter));
+                            td.style.display = isCellMatch ? 'table-cell' : 'none';
                         });
+                        
+                        // Khusus untuk baris colspan (Upacara, Istirahat, dll)
+                        const colspanTd = row.querySelector('td[colspan]');
+                        if (colspanTd) {
+                            if (activeClassFilter === 'all-classes') {
+                                colspanTd.style.display = 'table-cell';
+                                colspanTd.colSpan = 6;
+                            } else {
+                                colspanTd.style.display = 'table-cell';
+                                colspanTd.colSpan = 1; 
+                            }
+                        }
                     }
                 });
+            }
+
+            classFilterBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    classFilterBtns.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    updateDisplay();
+                });
             });
+
+            dayFilterBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    dayFilterBtns.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    updateDisplay();
+                });
+            });
+            
+            updateDisplay(); // Panggil saat halaman pertama kali dimuat
         });
     </script>
 </body>
