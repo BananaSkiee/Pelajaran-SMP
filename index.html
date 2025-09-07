@@ -181,17 +181,16 @@
             <tr><th>No.</th><th>Waktu</th><th>Mata Pelajaran</th></tr>
           </thead>
           <tbody>
-            <!-- filled by JS -->
-          </tbody>
+            </tbody>
         </table>
         <div class="small" style="text-align:center;margin-top:8px;color:#637b76">Klik kelas lalu hari — klik lagi tombol untuk membatalkan pilihan.</div>
-      </div>
+              </div>
 
       <aside class="rightcol">
         <div class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div style="font-weight:700;color:var(--accent-2)">Daftar Kode Mapel</div>
-            <div class="small">17 entri</div>
+            <div class="small" id="kodeCount"></div>
           </div>
           <table class="kode-table" id="kodeMapelTable" style="margin-top:10px">
             <thead><tr><th style="width:12%">Kode</th><th style="width:55%">Nama</th><th style="width:33%">Mapel</th></tr></thead>
@@ -222,385 +221,375 @@
 
 <script>
 /* ================= DATA: jadwal lengkap (diambil & disusun dari input awal) ================ */
-/* Struktur jadwal[Hari][Kelas] = array of rows {no, waktu, mapel, jenis?} */
 const jadwal = {
   "Senin": {
-    "7.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Upacara","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"PPSC"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"B. Indonesia"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"PAI"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"PAI"}
+    "7.1": [
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PPSC" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "PPSC" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "PPSC" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "B. Indonesia" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "B. Indonesia" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "B. Indonesia" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "PAI" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "PAI" }
     ],
-    "7.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Upacara","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"B. Indonesia"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"B. Indonesia"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"PJOK"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"PJOK"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"PJOK"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "7.2": [
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "B. Indonesia" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "B. Indonesia" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "B. Indonesia" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "SBK" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "SBK" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "SBK" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "IPS" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "IPS" }
     ],
-    "8.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Upacara","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"PPSC"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"B. Indonesia"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"IPS"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"IPS"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"IPS"}
+    "8.1": [
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PJOK" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "PJOK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "PJOK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "B. Indonesia" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "B. Indonesia" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "IPS" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "IPS" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "IPS" }
     ],
-    "8.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Upacara","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"MTK"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"MTK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"MTK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"IPS"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"IPS"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "8.2": [
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "MTK" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "MTK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "MTK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "IPS" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "IPS" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "B. Indonesia" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "B. Indonesia" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "B. Indonesia" }
     ],
-    "9.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Upacara","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PJOK"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"PJOK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"PJOK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"IPA"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"IPA"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"IPA"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"TIK"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"TIK"}
+    "9.1": [
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PJOK" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "PJOK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "PJOK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "IPA" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "IPA" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "IPA" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "TIK" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "TIK" }
     ],
-    "9.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Upacara","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"IPA"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"IPA"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"IPA"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"MTK"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"BK"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "9.2": [
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "IPA" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "IPA" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "IPA" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "MTK" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "BK" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "IPS" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "B. Indonesia" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "B. Indonesia" }
     ]
   },
-
   "Selasa": {
-    "7.1":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"MTK"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"MTK"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"MTK"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "7.1": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "MTK" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "MTK" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "MTK" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "B. Indonesia" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "B. Indonesia" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "B. Indonesia" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "IPS" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "IPS" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "IPS" }
     ],
-    "7.2":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"PPSC"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"MTK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"MTK"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"MTK"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"IPA"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"IPA"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"IPA"}
+    "7.2": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "PPSC" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "PPSC" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "PPSC" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "MTK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "MTK" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "MTK" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "IPA" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "IPA" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "IPA" }
     ],
-    "8.1":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"B.Inggris"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"B.Inggris"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"B.Inggris"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"BK"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"MTK"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"MTK"}
+    "8.1": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "B. Inggris" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "B. Inggris" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "B. Inggris" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "B. Indonesia" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "B. Indonesia" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "B. Indonesia" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "BK" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "MTK" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "MTK" }
     ],
-    "8.2":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"PPSC"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"B.Inggris"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"B.Inggris"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"MTK"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"MTK"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"TIK"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"TIK"}
+    "8.2": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "PJOK" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "PJOK" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "PJOK" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "B. Inggris" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "B. Inggris" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "MTK" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "MTK" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "TIK" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "TIK" }
     ],
-    "9.1":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"MTK"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"MTK"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"MTK"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "9.1": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "MTK" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "MTK" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "MTK" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "IPS" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "IPS" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "IPS" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "B. Indonesia" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "B. Indonesia" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "B. Indonesia" }
     ],
-    "9.2":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"B. Indonesia"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"B. Indonesia"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"B. Indonesia"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"MTK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"MTK"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"TIK"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"TIK"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"IPA"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"IPA"}
+    "9.2": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "B. Indonesia" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "B. Indonesia" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "B. Indonesia" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "MTK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "MTK" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "PJOK" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "PJOK" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "IPA" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "IPA" }
     ]
   },
-
   "Rabu": {
-    "7.1":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"B. Indonesia"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"PPSC"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"B. Inggris"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"B. Inggris"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"IPA"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"IPA"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"IPA"}
+    "7.1": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "IPS" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "PJOK" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "PJOK" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "PJOK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "B. Inggris" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "B. Inggris" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "IPA" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "IPA" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "IPA" }
     ],
-    "7.2":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"B. Inggris"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"B. Inggris"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"B. Inggris"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"IPA"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"IPA"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"TIK"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"TIK"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "7.2": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "B. Inggris" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "B. Inggris" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "B. Inggris" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "IPA" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "IPA" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "TIK" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "TIK" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "IPS" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "IPS" }
     ],
-    "8.1":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"PAI"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"PAI"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"PAI"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"PPSC"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"PPSC"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"PPSC"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"PJOK"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"PJOK"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"PJOK"}
+    "8.1": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "PAI" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "PAI" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "PAI" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "PPSC" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": 
+       "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "PPSC" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "PPSC" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "SBK" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "SBK" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "SBK" }
     ],
-    "8.2":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"PPSC"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"PAI"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"PAI"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"PAI"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"IPA"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"IPA"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"BK"}
+    "8.2": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "PPSC" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "PPSC" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "PPSC" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "PAI" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "PAI" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "PAI" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "IPA" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "IPA" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "BK" }
     ],
-    "9.1":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"SBK"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"SBK"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"SBK"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"IPA"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"IPA"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"BK"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"B. Inggris"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"B. Inggris"}
+    "9.1": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "SBK" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "SBK" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "SBK" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "IPS" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "IPA" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "IPA" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "BK" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "B. Inggris" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "B. Inggris" }
     ],
-    "9.2":[
-      {"no":1,"waktu":"07.00 - 07.35","mapel":"PJOK"},
-      {"no":2,"waktu":"07.35 - 08.10","mapel":"PJOK"},
-      {"no":3,"waktu":"08.10 - 08.45","mapel":"PJOK"},
-      {"no":4,"waktu":"08.45 - 09.20","mapel":"SBK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":5,"waktu":"09.35 - 10.10","mapel":"SBK"},
-      {"no":6,"waktu":"10.10 - 10.45","mapel":"SBK"},
-      {"no":7,"waktu":"10.45 - 11.20","mapel":"PAI"},
-      {"no":8,"waktu":"11.20 - 11.55","mapel":"PAI"},
-      {"no":9,"waktu":"11.55 - 12.30","mapel":"PAI"}
+    "9.2": [
+      { "no": 1, "waktu": "07.00 – 07.35", "mapel": "PJOK" },
+      { "no": 2, "waktu": "07.35 – 08.10", "mapel": "PJOK" },
+      { "no": 3, "waktu": "08.10 – 08.45", "mapel": "PJOK" },
+      { "no": 4, "waktu": "08.45 – 09.20", "mapel": "SBK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 5, "waktu": "09.35 – 10.10", "mapel": "SBK" },
+      { "no": 6, "waktu": "10.10 – 10.45", "mapel": "SBK" },
+      { "no": 7, "waktu": "10.45 – 11.20", "mapel": "PAI" },
+      { "no": 8, "waktu": "11.20 – 11.55", "mapel": "PAI" },
+      { "no": 9, "waktu": "11.55 – 12.30", "mapel": "PAI" }
     ]
   },
-
   "Kamis": {
-    "7.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Literasi/Senam","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"B. Inggris"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"B. Inggris"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"IPA"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"IPA"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"MTK"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"MTK"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"TIK"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"TIK"}
+    "7.1": [
+      { "no": "Literasi/Senam", "waktu": "07.00 – 07.35", "mapel": "Literasi/Senam", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "B. Inggris" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "B. Inggris" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "IPA" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "IPA" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "MTK" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "MTK" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "TIK" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "TIK" }
     ],
-    "7.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Literasi/Senam","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PAI"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"B. Indonesia"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"PAI"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"PAI"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"MTK"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"MTK"}
+    "7.2": [
+      { "no": "Literasi/Senam", "waktu": "07.00 – 07.35", "mapel": "Literasi/Senam", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PAI" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "B. Indonesia" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "B. Indonesia" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "B. Indonesia" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "PAI" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "PAI" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "MTK" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "MTK" }
     ],
-    "8.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Literasi/Senam","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"B. Indonesia"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"TIK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"TIK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"IPS"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"B.Inggris"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"IPA"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"IPA"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"IPA"}
+    "8.1": [
+      { "no": "Literasi/Senam", "waktu": "07.00 – 07.35", "mapel": "Literasi/Senam", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "B. Indonesia" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "TIK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "TIK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "IPS" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "B. Inggris" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "IPA" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "IPA" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "IPA" }
     ],
-    "8.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Literasi/Senam","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"IPS"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"IPS"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"B.Inggris"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"B.Inggris"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"PJOK"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "8.2": [
+      { "no": "Literasi/Senam", "waktu": "07.00 – 07.35", "mapel": "Literasi/Senam", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "IPS" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "IPS" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "B. Inggris" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "B. Inggris" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "SBK" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "B. Indonesia" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "B. Indonesia" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "B. Indonesia" }
     ],
-    "9.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Literasi/Senam","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PAI"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"MTK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"MTK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"PAI"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"B. Inggris"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"B. Indonesia"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"B. Indonesia"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"B. Indonesia"}
+    "9.1": [
+      { "no": "Literasi/Senam", "waktu": "07.00 – 07.35", "mapel": "Literasi/Senam", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PAI" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "PAI" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "PAI" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "B. Inggris" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "SBK" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "B. Indonesia" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "B. Indonesia" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "B. Indonesia" }
     ],
-    "9.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Literasi/Senam","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"B. Indonesia"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"MTK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"MTK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"PPSC"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"PPSC"},
-      {"no":6,"waktu":"10.45 - 11.20","mapel":"PPSC"},
-      {"no":7,"waktu":"11.20 - 11.55","mapel":"B. Inggris"},
-      {"no":8,"waktu":"11.55 - 12.30","mapel":"B. Inggris"}
+    "9.2": [
+      { "no": "Literasi/Senam", "waktu": "07.00 – 07.35", "mapel": "Literasi/Senam", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "B. Indonesia" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "MTK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "MTK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "PPSC" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "PPSC" },
+      { "no": 6, "waktu": "10.45 – 11.20", "mapel": "PPSC" },
+      { "no": 7, "waktu": "11.20 – 11.55", "mapel": "B. Inggris" },
+      { "no": 8, "waktu": "11.55 – 12.30", "mapel": "B. Inggris" }
     ]
   },
-
   "Jumat": {
-    "7.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Pengajian","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PJOK"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"PJOK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"PJOK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"BK"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"PAI"}
+    "7.1": [
+      { "no": "Pengajian", "waktu": "07.00 – 07.35", "mapel": "Pengajian", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "SBK" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "SBK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "SBK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "BK" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "PAI" }
     ],
-    "7.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Pengajian","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"PPSC"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"B. Inggris"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"BK"}
+    "7.2": [
+      { "no": "Pengajian", "waktu": "07.00 – 07.35", "mapel": "Pengajian", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PJOK" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "PJOK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "PJOK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "B. Inggris" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "BK" }
     ],
-    "8.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Pengajian","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"MTK"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"MTK"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"MTK"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"IPA"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"IPA"}
+    "8.1": [
+      { "no": "Pengajian", "waktu": "07.00 – 07.35", "mapel": "Pengajian", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "MTK" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "MTK" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "MTK" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "IPA" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "IPA" }
     ],
-    "8.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Pengajian","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"IPA"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"IPA"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"IPA"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"PJOK"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"PJOK"}
+    "8.2": [
+      { "no": "Pengajian", "waktu": "07.00 – 07.35", "mapel": "Pengajian", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "IPA" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "IPA" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "IPA" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "SBK" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "SBK" }
     ],
-    "9.1":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Pengajian","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"PPSC"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"PPSC"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"PPSC"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"MTK"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"MTK"}
+    "9.1": [
+      { "no": "Pengajian", "waktu": "07.00 – 07.35", "mapel": "Pengajian", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "PPSC" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "PPSC" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "PPSC" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "MTK" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "MTK" }
     ],
-    "9.2":[
-      {"no":"","waktu":"07.00 - 07.35","mapel":"Pengajian","jenis":"kegiatan-bersama"},
-      {"no":1,"waktu":"07.35 - 08.10","mapel":"B. Inggris"},
-      {"no":2,"waktu":"08.10 - 08.45","mapel":"B. Inggris"},
-      {"no":3,"waktu":"08.45 - 09.20","mapel":"B. Indonesia"},
-      {"no":"","waktu":"09.20 - 09.35","mapel":"Istirahat","jenis":"istirahat"},
-      {"no":4,"waktu":"09.35 - 10.10","mapel":"B. Indonesia"},
-      {"no":5,"waktu":"10.10 - 10.45","mapel":"B. Indonesia"}
+    "9.2": [
+      { "no": "Pengajian", "waktu": "07.00 – 07.35", "mapel": "Pengajian", "jenis": "kegiatan-bersama" },
+      { "no": 1, "waktu": "07.35 – 08.10", "mapel": "B. Inggris" },
+      { "no": 2, "waktu": "08.10 – 08.45", "mapel": "B. Inggris" },
+      { "no": 3, "waktu": "08.45 – 09.20", "mapel": "IPS" },
+      { "no": "Istirahat", "waktu": "09.20 – 09.35", "mapel": "Istirahat", "jenis": "istirahat" },
+      { "no": 4, "waktu": "09.35 – 10.10", "mapel": "IPS" },
+      { "no": 5, "waktu": "10.10 – 10.45", "mapel": "IPS" }
     ]
   }
-}; // end jadwal
+};
 
 /* ========== KODE MAPEL data (dari gambar yang kamu kirim) ========== */
 const kodeMapel = [
-  {kode:1, nama:"Ali Susanto, M.MPd", mapel:"B. Indonesia"},
-  {kode:2, nama:"Heris Mujiati, S.Pd", mapel:"a. IPS    b. PPSC"},
-  {kode:3, nama:"D. Sumadinata, S.Pd", mapel:"PPSC"},
-  {kode:4, nama:"Masruddin Turuh, S.Sos", mapel:"IPS"},
-  {kode:5, nama:"Nurela Widianingsih,S.Pd", mapel:"B. Indonesia"},
-  {kode:6, nama:"Amelia, S.Pd.Ing", mapel:"B. Inggris"},
-  {kode:7, nama:"Rima Mustika P, S.Pd", mapel:"MTK"},
-  {kode:8, nama:"Heru Hatmoko, S.Th", mapel:"a) Pjok   b) SBK"},
-  {kode:9, nama:"Rika Fatkurina, S.Pdi", mapel:"PAI"},
-  {kode:10, nama:"Supendi, S.Pd", mapel:"SBK"},
-  {kode:11, nama:"Ade Rike, S.Pd", mapel:"a) B.Indonesia   b) IPA"},
-  {kode:12, nama:"Ahmad Ihsanudin M, S.Pd", mapel:"MTK"},
-  {kode:13, nama:"Ninda Anisa,S.Si", mapel:"IPA"},
-  {kode:14, nama:"Misabhul Munir,S.Pd.I", mapel:"a) PAI   b) PPSC"},
-  {kode:15, nama:"Oktaftianus Gea", mapel:"a) TIK   b) PJOK"},
-  {kode:16, nama:"Ummu Syarifah,S.Pd", mapel:"BK"},
-  {kode:17, nama:"Indah Masnuroh,S.Pd", mapel:"B. inggris"}
+  { kode: 1, nama: "Ali Susanto, M.MPd", mapel: "B. Indonesia" },
+  { kode: 2, nama: "Heris Mujiati, S.Pd", mapel: "a. IPS b. PPSC" },
+  { kode: 3, nama: "D. Sumadinata, S.Pd", mapel: "PPSC" },
+  { kode: 4, nama: "Masruddin Turuh, S.Sos", mapel: "IPS" },
+  { kode: 5, nama: "Nurela Widianingsih,S.Pd", mapel: "B. Indonesia" },
+  { kode: 6, nama: "Amelia, S.Pd.Ing", mapel: "B. Inggris" },
+  { kode: 7, nama: "Rima Mustika P, S.Pd", mapel: "MTK" },
+  { kode: 8, nama: "Heru Hatmoko, S.Th", mapel: "a) Pjok b) SBK" },
+  { kode: 9, nama: "Rika Fatkurina, S.Pdi", mapel: "PAI" },
+  { kode: 10, nama: "Supendi, S.Pd", mapel: "SBK" },
+  { kode: 11, nama: "Ade Rike, S.Pd", mapel: "a) B.Indonesia b) IPA" },
+  { kode: 12, nama: "Ahmad Ihsanudin M, S.Pd", mapel: "MTK" },
+  { kode: 13, nama: "Ninda Anisa,S.Si", mapel: "IPA" },
+  { kode: 14, nama: "Misabhul Munir,S.Pd.I", mapel: "a) PAI b) PPSC" },
+  { kode: 15, nama: "Oktaftianus Gea", mapel: "a) TIK b) PJOK" },
+  { kode: 16, nama: "Ummu Syarifah,S.Pd", mapel: "BK" },
+  { kode: 17, nama: "Indah Masnuroh,S.Pd", mapel: "B. inggris" }
 ];
 
 /* ========== UI helpers ========== */
@@ -612,16 +601,16 @@ const statusText = document.getElementById('statusText');
 let selectedKelas = null;
 let selectedHari = null;
 
-function setStatus(){
-  if(selectedKelas && selectedHari) statusText.textContent = `Menampilkan: Kelas ${selectedKelas} — ${selectedHari}`;
-  else if(selectedKelas) statusText.textContent = `Kelas ${selectedKelas} dipilih — pilih hari`;
-  else if(selectedHari) statusText.textContent = `${selectedHari} dipilih — pilih kelas`;
+function setStatus() {
+  if (selectedKelas && selectedHari) statusText.textContent = `Menampilkan: Kelas ${selectedKelas} — ${selectedHari}`;
+    else if (selectedKelas) statusText.textContent = `Kelas ${selectedKelas} dipilih — pilih hari`;
+  else if (selectedHari) statusText.textContent = `${selectedHari} dipilih — pilih kelas`;
   else statusText.textContent = 'Pilih kelas & hari';
 }
 
-function renderJadwal(){
+function renderJadwal() {
   tbody.innerHTML = '';
-  if(!selectedKelas || !selectedHari){
+  if (!selectedKelas || !selectedHari) {
     const tr = document.createElement('tr');
     tr.innerHTML = '<td colspan="3" style="padding:18px;color:#4f6f68">Pilih kelas dan hari untuk menampilkan jadwal.</td>';
     tbody.appendChild(tr);
@@ -630,60 +619,67 @@ function renderJadwal(){
   }
   setStatus();
   const rows = (jadwal[selectedHari] && jadwal[selectedHari][selectedKelas]) || [];
-  if(rows.length===0){
+  if (rows.length === 0) {
     const tr = document.createElement('tr');
     tr.innerHTML = '<td colspan="3" style="padding:18px;color:#7b8f8a">Tidak ada data untuk kombinasi ini.</td>';
     tbody.appendChild(tr);
     return;
   }
-  rows.forEach(r=>{
+  rows.forEach(r => {
     const tr = document.createElement('tr');
-    if(r.jenis==='kegiatan-bersama') tr.classList.add('kegiatan-bersama');
-    if(r.jenis==='istirahat') tr.classList.add('istirahat');
-    tr.innerHTML = `<td>${r.no ?? ''}</td><td>${r.waktu}</td><td style="font-weight:${r.jenis?800:600}">${r.mapel}</td>`;
+    if (r.jenis === 'kegiatan-bersama') tr.classList.add('kegiatan-bersama');
+    if (r.jenis === 'istirahat') tr.classList.add('istirahat');
+    tr.innerHTML = `<td>${r.no ?? ''}</td><td>${r.waktu}</td><td style="font-weight:${r.jenis ? 800 : 600}">${r.mapel}</td>`;
     tbody.appendChild(tr);
   });
 }
 
 /* toggle selection behaviour */
-kelasButtons.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
+kelasButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
     const k = btn.dataset.kelas;
-    if(selectedKelas===k){ selectedKelas = null; btn.classList.remove('active'); }
-    else{
+    if (selectedKelas === k) {
+      selectedKelas = null;
+      btn.classList.remove('active');
+    } else {
+      kelasButtons.forEach(b => b.classList.remove('active'));
       selectedKelas = k;
-      kelasButtons.forEach(b=>b.classList.toggle('active', b===btn));
+      btn.classList.add('active');
     }
     renderJadwal();
   });
 });
-hariButtons.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
+hariButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
     const h = btn.dataset.hari;
-    if(selectedHari===h){ selectedHari = null; btn.classList.remove('active'); }
-    else{
+    if (selectedHari === h) {
+      selectedHari = null;
+      btn.classList.remove('active');
+    } else {
+      hariButtons.forEach(b => b.classList.remove('active'));
       selectedHari = h;
-      hariButtons.forEach(b=>b.classList.toggle('active', b===btn));
+      btn.classList.add('active');
     }
     renderJadwal();
   });
 });
 
 /* auto default */
-(function init(){
+(function init() {
   // preselect 7.1 + Senin
   const dK = document.querySelector('[data-kelas="7.1"]');
   const dH = document.querySelector('[data-hari="Senin"]');
-  if(dK) dK.classList.add('active'), selectedKelas='7.1';
-  if(dH) dH.classList.add('active'), selectedHari='Senin';
+  if (dK) dK.classList.add('active'), selectedKelas = '7.1';
+  if (dH) dH.classList.add('active'), selectedHari = 'Senin';
   renderJadwal();
 })();
 
 /* ========== Kode Mapel rendering & CSV export ========== */
 const kodeTbody = document.querySelector('#kodeMapelTable tbody');
-function renderKodeTable(){
+document.getElementById('kodeCount').textContent = `${kodeMapel.length} entri`;
+function renderKodeTable() {
   kodeTbody.innerHTML = '';
-  kodeMapel.forEach(row=>{
+  kodeMapel.forEach(row => {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td style="font-weight:700">${row.kode}</td><td>${row.nama}</td><td>${row.mapel}</td>`;
     kodeTbody.appendChild(tr);
@@ -691,18 +687,18 @@ function renderKodeTable(){
 }
 renderKodeTable();
 
-function toCSV(rows, headers){
-  const esc = v => `"${String(v).replace(/"/g,'""')}"`;
+function toCSV(rows, headers) {
+  const esc = v => `"${String(v).replace(/"/g, '""')}"`;
   const lines = [headers.map(esc).join(',')];
-  rows.forEach(r=>{
-    lines.push(headers.map(h=>esc(r[h])).join(','));
+  rows.forEach(r => {
+    lines.push(headers.map(h => esc(r[h])).join(','));
   });
   return lines.join('\n');
 }
 
-document.getElementById('btnExportKode').addEventListener('click', ()=>{
-  const csv = toCSV(kodeMapel, ['kode','nama','mapel']);
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+document.getElementById('btnExportKode').addEventListener('click', () => {
+  const csv = toCSV(kodeMapel, ['kode', 'nama', 'mapel']);
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -713,14 +709,13 @@ document.getElementById('btnExportKode').addEventListener('click', ()=>{
   URL.revokeObjectURL(url);
 });
 
-document.getElementById('exportKodeCSV').addEventListener('click', ()=>{
+document.getElementById('exportKodeCSV').addEventListener('click', () => {
   document.getElementById('btnExportKode').click();
 });
 
-document.getElementById('btnCopyKode').addEventListener('click', ()=>{
-  // copy kode table as text
-  const text = kodeMapel.map(r=>`${r.kode}\t${r.nama}\t${r.mapel}`).join('\n');
-  navigator.clipboard?.writeText(text).then(()=> alert('Tabel Kode Mapel berhasil disalin (clipboard).'), ()=> alert('Gagal menyalin clipboard.'));
+document.getElementById('btnCopyKode').addEventListener('click', () => {
+  const text = kodeMapel.map(r => `${r.kode}\t${r.nama}\t${r.mapel}`).join('\n');
+  navigator.clipboard?.writeText(text).then(() => alert('Tabel Kode Mapel berhasil disalin (clipboard).'), () => alert('Gagal menyalin clipboard.'));
 });
 
 /* ========== Comments (localStorage) ========== */
@@ -728,44 +723,64 @@ const commentInput = document.getElementById('commentInput');
 const commentList = document.getElementById('commentList');
 const STORAGE_KEY = 'jadwal_comments_v1';
 
-function loadComments(){
-  try{
+function loadComments() {
+  try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : [];
-  }catch(e){ return []; }
+  } catch (e) {
+    return [];
+  }
 }
-function saveComments(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+function saveComments(arr) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
 
-function renderComments(){
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, m => ({
+    '&': '&',
+    '<': '<',
+    '>': '>',
+    '"': '"',
+    "'": '''
+  }[m]));
+}
+
+function renderComments() {
   const arr = loadComments();
   commentList.innerHTML = '';
-  if(arr.length===0){ commentList.innerHTML = '<div class="small" style="color:#6d7f7a">Belum ada komentar.</div>'; return; }
-  arr.slice().reverse().forEach((c, idx)=>{
+  if (arr.length === 0) {
+    commentList.innerHTML = '<div class="small" style="color:#6d7f7a">Belum ada komentar.</div>';
+    return;
+  }
+  arr.slice().reverse().forEach((c, idx) => {
     const el = document.createElement('div');
     el.className = 'comment-item';
-    el.innerHTML = `<div class="meta"><div>${c.time}</div><div><button class="btn ghost" data-idx="${arr.length-1-idx}" style="padding:6px 8px;font-size:12px">Hapus</button></div></div>
+    el.innerHTML = `<div class="meta"><div>${c.time}</div><div><button class="btn ghost btn-delete" data-idx="${arr.length - 1 - idx}" style="padding:6px 8px;font-size:12px">Hapus</button></div></div>
       <div>${escapeHtml(c.text)}</div>`;
     commentList.appendChild(el);
-    el.querySelector('button')?.addEventListener('click', (ev)=>{
+  });
+  document.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.addEventListener('click', (ev) => {
       const i = Number(ev.currentTarget.dataset.idx);
-      const a = loadComments(); a.splice(i,1); saveComments(a); renderComments();
+      const a = loadComments();
+      a.splice(i, 1);
+      saveComments(a);
+      renderComments();
     });
   });
 }
 
-function escapeHtml(s){ return s.replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); }); }
-
-document.getElementById('btnAddComment').addEventListener('click', ()=>{
+document.getElementById('btnAddComment').addEventListener('click', () => {
   const txt = commentInput.value.trim();
-  if(!txt) return alert('Tulis komentar dulu.');
+  if (!txt) return alert('Tulis komentar dulu.');
   const arr = loadComments();
   arr.push({ text: txt, time: (new Date()).toLocaleString() });
   saveComments(arr);
   commentInput.value = '';
   renderComments();
 });
-document.getElementById('btnClearComments').addEventListener('click', ()=>{
-  if(!confirm('Hapus semua komentar?')) return;
+document.getElementById('btnClearComments').addEventListener('click', () => {
+  if (!confirm('Hapus semua komentar?')) return;
   localStorage.removeItem(STORAGE_KEY);
   renderComments();
 });
@@ -773,11 +788,9 @@ document.getElementById('btnClearComments').addEventListener('click', ()=>{
 renderComments();
 
 /* ========== Print ========== */
-document.getElementById('btnPrint').addEventListener('click', ()=>{
+document.getElementById('btnPrint').addEventListener('click', () => {
   window.print();
 });
-
-/* initial small UI binding already done above */
 </script>
 </body>
 </html>
